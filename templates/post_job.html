@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="row gy-5 gx-4">
+            <div class="col-lg-8">
+                <div class="">
+                    <h4 class="mb-4">Create Job Post</h4>
+                    <form action = "/post_job" method = "POST">
+                        <div class="row g-3">
+                            <div class="col-12 col-sm-6">
+                                <h5>Choose a category</h5>
+                                <div>
+                                    <input type="radio" id="acc" name="categories" value="Accounting and Finance">
+                                    <label>Accounting and Finance</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="eng" name="categories" value="Engineering">
+                                    <label>Engineering</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="hea" name="categories" value="Healthcare and Nursing">
+                                    <label>Healthcare and Nursing</label>
+                                </div>
+                                <div>
+                                    <input type="radio" id="sal" name="categories" value="Sales">
+                                    <label>Sales</label>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <h5>Generate Category Recommendation</h5>
+                                <input type="text" name="category" value=" {{ prediction }} " class="form-control bg-white" disabled>
+                                <div class="col-12">
+                                    <button class="btn btn-secondary w-100" type="submit" name="button" value="generate">Generate</button>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <input type="text" class="form-control" name="title" placeholder="Title" value="{{ title }}" required>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <input type="email" class="form-control" name="email" placeholder="Contact Email" value="{{ email }}">
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <input type="text" class="form-control" name="salary" placeholder="Salary" value="{{ salary }}">
+                            </div>
+                            <div class="col-12">
+                                <textarea class="form-control" rows="5" name="description" placeholder="Description" required>{{ description }}</textarea>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100" type="submit" name="button" value="post">Post</button>
+
+                                {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <div>
+                                                <h6 class="mb-3" style="color:red">{{ message }}</h6>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endwith %}
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
