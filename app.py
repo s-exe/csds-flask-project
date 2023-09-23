@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import pickle
 
 app = Flask(__name__)
 
@@ -7,8 +8,11 @@ top_5_features = ['Feature1', 'Feature2', 'Feature3', 'Feature4', 'Feature5']
 
 # Sample model prediction function (replace this with  actual model)
 def predict(input_data):
+    model = pickle.load(open('model_v1.pkl', 'rb'))
+    prediction = model.predict(input_data)
     # Replace this with your model prediction logic
-    return {'prediction': 'Yes', 'confidence': 0.75}
+    # return {'prediction': 'Yes', 'confidence': 0.75}
+    return prediction
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
