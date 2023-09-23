@@ -18,7 +18,7 @@ python app.py
 
    https://api.render.com/deploy/srv-ck3ab2uru70s73cdqtr0?key=Wr8ndFj47nw
    
-2. The website can be accessed through this link:
+2. The website can be accessed through the link below. The server spins-down after 15 minutes of not receiving any traffic, therefore the initial loading time for the website might take a few seconds longer:
 
    https://explain-ohpa.onrender.com/
 
