@@ -32,9 +32,10 @@ def plot_to_img():
 
     img = io.BytesIO()
     plt.savefig(img, format='png')
+    plt.close()
     img.seek(0)
 
-    img_b64 = base64.b64encode(img.getvalue()).decode()
+    img_b64 = base64.b64encode(img.getvalue()).decode('utf8')
 
     return img_b64
 
@@ -61,7 +62,4 @@ if __name__ == '__main__':
 def plot():
 
     img_b64 = plot_to_img()
-
-    html = f'<img src="data:image/png;base64,{img_b64}" class="blog-image">'
-
-    return render_template_string(html)
+    return render_template('plot.html', plot_url=img_b64)
