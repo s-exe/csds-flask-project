@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, render_template_string
 import pickle
 import matplotlib.pyplot as plt
 import numpy as np
