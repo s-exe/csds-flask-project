@@ -60,6 +60,5 @@ if __name__ == '__main__':
 
 @app.route('/plot')
 def plot():
-
-    img_b64 = plot_to_img()
-    return render_template('plot.html', plot_url=img_b64)
+    #img_b64 = plot_to_img()
+    return render_template('plot.html') #, plot_url=img_b64)
