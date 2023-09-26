@@ -30,7 +30,7 @@ def run_lime(sample, model):
     file.close()
     explanation = explainer.explain_instance(sample, model.predict_proba)
     print("EXPLANATION SUCCESSFULLY GENERATED")
-    
+
     return explanation
 
 
@@ -184,10 +184,6 @@ def index():
 
     return render_template('dashboard.html', top_5_features=top_5_features)
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
 @app.route('/plot')
 def plot():
     sample_data = [87, 155, 4, 70, 35, 0, 0, 100, -7, 7, 8, 36, 1, 19, 0, 0, 0, 2, -8, 2, 1, 0, 20]
@@ -209,3 +205,7 @@ def plot():
     #pie_chart_img = plot_to_img('pie', explanation)
     #img_b64 = plot_to_img()
     return render_template('plot.html')#, bar_plot_url=bar_plot_img, pie_chart_url=pie_chart_img)
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
