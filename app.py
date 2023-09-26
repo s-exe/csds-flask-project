@@ -194,7 +194,7 @@ def plot():
     sample_shaped = sample.values.reshape(1,23)
 
     prediction, model = predict(sample_shaped)
-    #explanation = run_lime(sample, model)
+    explanation = run_lime(sample, model)
 
     #bar_plot_img = plot_to_img('bar', explanation)
     #pie_chart_img = plot_to_img('pie', explanation)
