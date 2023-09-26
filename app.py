@@ -20,8 +20,11 @@ def predict(sample_shaped):
 
 # Load in LIME model, return explanation of instance object
 def run_lime(sample, model):
+    print("INITIATED RUNNING LIME.....")
     explainer = explainer = dill.load(open('lime_model', 'rb'))
+    print("LIME MODEL LOADED.....")
     explanation = explainer.explain_instance(sample, model.predict_proba)
+    print("EXPLANATION SUCCESSFULLY GENERATED")
     return explanation
 
 
