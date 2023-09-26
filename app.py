@@ -23,13 +23,10 @@ def predict(sample_shaped):
 
 # Load in LIME model, return explanation of instance object
 def run_lime(sample, model):
-    print("INITIATED RUNNING LIME.....")
     file = open('lime_model', 'rb')
     explainer = dill.load(file)
-    print("LIME MODEL LOADED.....")
     file.close()
     explanation = explainer.explain_instance(sample, model.predict_proba)
-    print("EXPLANATION SUCCESSFULLY GENERATED")
 
     return explanation
 
@@ -164,12 +161,7 @@ def plot_to_img(type, explanation):
         return img_b64
 
 # Placeholder values for index route
-top_5_features = [1, 2, 3, 4, 5]
-
-
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    sample_data = {'ExternalRiskEstimate':87, 
+sample_data = {'ExternalRiskEstimate':87, 
                    'MSinceOldestTradeOpen':155, 
                    'MSinceMostRecentTradeOpen':4, 
                    'AverageMInFile':70, 
@@ -193,13 +185,15 @@ def index():
                    'NumBank2NatlTradesWHighUtilization':0, 
                    'PercentTradesWBalance':20}
 
-    if request.method == 'POST':
-        user_input = {}
-        for feature in top_5_features:
-            user_input[feature] = float(request.form.get(feature, 0.0))
 
-        # Call machine learning model to make predictions
-        prediction_result = predict(user_input)
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        # print(sample_data)
+        for i in range(1, 11):
+            label = request.form.get("label"+str(i))
+            val = request.form.get("feature"+str(i))
+            sample_data[label] = int(val)
 
     sample = pd.Series(sample_data)
     sample_shaped = sample.values.reshape(1,23)
@@ -221,7 +215,17 @@ def index():
                            feat7=top10[6][0], 
                            feat8=top10[7][0], 
                            feat9=top10[8][0], 
-                           feat10=top10[9][0], 
+                           feat10=top10[9][0],
+                           val1=sample_data[top10[0][0]],
+                           val2=sample_data[top10[1][0]],
+                           val3=sample_data[top10[2][0]],
+                           val4=sample_data[top10[3][0]],
+                           val5=sample_data[top10[4][0]],
+                           val6=sample_data[top10[5][0]],
+                           val7=sample_data[top10[6][0]],
+                           val8=sample_data[top10[7][0]],
+                           val9=sample_data[top10[8][0]],
+                           val10=sample_data[top10[9][0]], 
                            bar_plot_url=bar_plot_img, 
                            pie_chart_url=pie_chart_img
                            )
