@@ -158,7 +158,7 @@ def plot_to_img(type, explanation):
 
         return img_b64
 
-
+top_5_features = [1, 2, 3, 4, 5]
 
 
 @app.route('/', methods=['GET', 'POST'])
