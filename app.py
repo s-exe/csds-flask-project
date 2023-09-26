@@ -197,10 +197,23 @@ def plot():
     prediction, model = predict(sample_shaped)
     explanation = run_lime(sample, model)
 
+    top10 = get_top10(explanation)
     bar_plot_img = plot_to_img('bar', explanation)
     pie_chart_img = plot_to_img('pie', explanation)
 
-    return render_template('plot.html', bar_plot_url=bar_plot_img, pie_chart_url=pie_chart_img)
+    return render_template('plot.html', 
+                           feat1=top10[0][0], 
+                           feat2=top10[1][0], 
+                           feat3=top10[2][0], 
+                           feat4=top10[3][0], 
+                           feat5=top10[4][0], 
+                           feat6=top10[5][0], 
+                           feat7=top10[6][0], 
+                           feat8=top10[7][0], 
+                           feat9=top10[8][0], 
+                           feat10=top10[9][0], 
+                           bar_plot_url=bar_plot_img, 
+                           pie_chart_url=pie_chart_img)
 
 
 

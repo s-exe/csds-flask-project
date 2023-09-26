@@ -123,26 +123,41 @@
                 <h3>Sam Smith's Profile</h3>
             </div>
 
-            <h3>Top five features</h3>
+            <h3>Top 10 contributing features</h3>
             <form method="POST">
                 <!-- feature inputs -->
-                <label for="feature1">Feature 1:</label><br>
-                <input type="number" step="0.01" id="feature1" name="feature1" required><br><br>
+                <label for="feature1">{{ feat1 }}</label><br>
+                <input type="number" id="feature1" name="feature1" required><br><br>
 
-                <label for="feature2">Feature 2:</label><br>
-                <input type="number" step="0.01" id="feature2" name="feature2" required><br><br>
+                <label for="feature2">{{ feat2 }}</label><br>
+                <input type="number" id="feature2" name="feature2" required><br><br>
 
-                <label for="feature3">Feature 3:</label><br>
-                <input type="number" step="0.01" id="feature3" name="feature3" required><br><br>
+                <label for="feature3">{{ feat3 }}</label><br>
+                <input type="number" id="feature3" name="feature3" required><br><br>
 
-                <label for="feature4">Feature 4:</label><br>
-                <input type="number" step="0.01" id="feature4" name="feature4" required><br><br>
+                <label for="feature4">{{ feat4 }}</label><br>
+                <input type="number" id="feature4" name="feature4" required><br><br>
 
-                <label for="feature5">Feature 5:</label><br>
-                <input type="number" step="0.01" id="feature5" name="feature5" required><br><br>
+                <label for="feature5">{{ feat5 }}</label><br>
+                <input type="number" id="feature5" name="feature5" required><br><br>
+
+                <label for="feature6">{{ feat6 }}</label><br>
+                <input type="number" id="feature6" name="feature6" required><br><br>
+
+                <label for="feature7">{{ feat7 }}</label><br>
+                <input type="number" id="feature7" name="feature7" required><br><br>
+
+                <label for="feature8">{{ feat8 }}</label><br>
+                <input type="number" id="feature8" name="feature8" required><br><br>
+
+                <label for="feature9">{{ feat9 }}</label><br>
+                <input type="number" id="feature9" name="feature9" required><br><br>
+
+                <label for="feature10">{{ feat10 }}</label><br>
+                <input type="number" id="feature10" name="feature10" required><br><br>
 
                 
-                <h3>Other features</h3>
+                <!-- <h3>Other features</h3>
                 
                 <select id="other-features" name="other-features">
                     <option value="Feature 6">Feature 6</option>
@@ -168,9 +183,9 @@
                 
                 <label for="other-features-value">Enter the value for the selected feature:</label>
                 <div class="input-with-button">
-                    <input type="number" step="0.01" id="other-features-value" name="other-features-value" required>
+                    <input type="number" id="other-features-value" name="other-features-value" required>
                     <button type="button" id="save-button">Save</button>
-                </div><br>
+                </div><br> -->
 
                 <button type="submit">Predict</button>
             </form>
