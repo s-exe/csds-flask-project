@@ -120,37 +120,54 @@
     <div class="container">
         <div class="sidebar">
             <div class="login-container">
-                <h3>Login</h3>
-                <form class="login-form" method="POST">
-                    <label for="username">Username:</label><br>
-                    <input type="text" id="username" name="username" required><br><br>
-                    <label for="password">Password:</label><br>
-                    <input type="password" id="password" name="password" required><br><br>
-                    <button type="submit">Login</button>
-                </form>
-                <p class="signup-link">Don't have an account? <a href="#">Sign up</a></p>
+                <h3>Sam Smith's Profile</h3>
             </div>
 
-            <h3>Top five features</h3>
+            <h3>Top 10 contributing features</h3>
             <form method="POST">
                 <!-- feature inputs -->
-                <label for="feature1">Feature 1:</label><br>
-                <input type="number" step="0.01" id="feature1" name="feature1" required><br><br>
+                <label for="feature1">{{ feat1 }}</label><br>
+                <input type="number" id="feature1" name="feature1" value='{{ val1 }}' required><br><br>
+                <input type="hidden" id="label1" name="label1" value="{{ feat1 }}">
 
-                <label for="feature2">Feature 2:</label><br>
-                <input type="number" step="0.01" id="feature2" name="feature2" required><br><br>
+                <label for="feature2">{{ feat2 }}</label><br>
+                <input type="number" id="feature2" name="feature2" value='{{ val2 }}' required><br><br>
+                <input type="hidden" id="label2" name="label2" value="{{ feat2 }}">
 
-                <label for="feature3">Feature 3:</label><br>
-                <input type="number" step="0.01" id="feature3" name="feature3" required><br><br>
+                <label for="feature3">{{ feat3 }}</label><br>
+                <input type="number" id="feature3" name="feature3" value='{{ val3 }}' required><br><br>
+                <input type="hidden" id="label3" name="label3" value="{{ feat3 }}">
 
-                <label for="feature4">Feature 4:</label><br>
-                <input type="number" step="0.01" id="feature4" name="feature4" required><br><br>
+                <label for="feature4">{{ feat4 }}</label><br>
+                <input type="number" id="feature4" name="feature4" value='{{ val4 }}' required><br><br>
+                <input type="hidden" id="label4" name="label4" value="{{ feat4 }}">
 
-                <label for="feature5">Feature 5:</label><br>
-                <input type="number" step="0.01" id="feature5" name="feature5" required><br><br>
+                <label for="feature5">{{ feat5 }}</label><br>
+                <input type="number" id="feature5" name="feature5" value='{{ val5 }}' required><br><br>
+                <input type="hidden" id="label5" name="label5" value="{{ feat5 }}">
+
+                <label for="feature6">{{ feat6 }}</label><br>
+                <input type="number" id="feature6" name="feature6" value='{{ val6 }}' required><br><br>
+                <input type="hidden" id="label6" name="label6" value="{{ feat6 }}">
+
+                <label for="feature7">{{ feat7 }}</label><br>
+                <input type="number" id="feature7" name="feature7" value='{{ val7 }}' required><br><br>
+                <input type="hidden" id="label7" name="label7" value="{{ feat7 }}">
+
+                <label for="feature8">{{ feat8 }}</label><br>
+                <input type="number" id="feature8" name="feature8" value='{{ val8 }}' required><br><br>
+                <input type="hidden" id="label8" name="label8" value="{{ feat8 }}">
+
+                <label for="feature9">{{ feat9 }}</label><br>
+                <input type="number" id="feature9" name="feature9" value='{{ val9 }}' required><br><br>
+                <input type="hidden" id="label9" name="label9" value="{{ feat9 }}">
+
+                <label for="feature10">{{ feat10 }}</label><br>
+                <input type="number" id="feature10" name="feature10" value='{{ val10 }}' required><br><br>
+                <input type="hidden" id="label10" name="label10" value="{{ feat10 }}">
 
                 
-                <h3>Other features</h3>
+                <!-- <h3>Other features</h3>
                 
                 <select id="other-features" name="other-features">
                     <option value="Feature 6">Feature 6</option>
@@ -176,9 +193,9 @@
                 
                 <label for="other-features-value">Enter the value for the selected feature:</label>
                 <div class="input-with-button">
-                    <input type="number" step="0.01" id="other-features-value" name="other-features-value" required>
+                    <input type="number" id="other-features-value" name="other-features-value" required>
                     <button type="button" id="save-button">Save</button>
-                </div><br>
+                </div><br> -->
 
                 <button type="submit">Predict</button>
             </form>
@@ -197,15 +214,81 @@
             
             <div class="rectangles-container">
                 <div class="placeholder-rectangle">
-                    <div class="rectangle-title">Feature Importance</div>
+                    <div class="rectangle-title">Contributing Factors</div>
                     <div class="description">
-                        <p>This is where we can add the feauture importance and info</p>
+                        <p>These are the factors that contributed to your loan approval prediction</p>
+                        <img src="data:image/png;base64,{{ bar_plot_url }}" class="plot-image">
+                        <!-- <table>
+                            <tr style="color: black; font-size: 10px;">
+                                <td>Feature</td>
+                                <td>Value</td>
+                            </tr>
+                            <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
+                                <td>0</td>
+                                <td>52.00</td>
+                            </tr>
+                            <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
+                                <td>17</td>
+                                <td>35.00</td>
+                            </tr>
+                            <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
+                                <td>3</td>
+                                <td>16.00</td>
+                            </tr>
+                            <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
+                                <td>7</td>
+                                <td>96.00</td>
+                            </tr>
+                            <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
+                                <td>22</td>
+                                <td>78.00</td>
+                            </tr>
+                            <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
+                                <td>10</td>
+                                <td>5.00</td>
+                            </tr>
+                            <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
+                                <td>1</td>
+                                <td>30.00</td>
+                            </tr>
+                            <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
+                                <td>21</td>
+                                <td>1.00</td>
+                            </tr>
+                            <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
+                                <td>9</td>
+                                <td>3.00</td>
+                            </tr>
+                            <tr style="border-style: hidden; background-color: rgb(255, 127, 14);">
+                                <td>14</td>
+                                <td>1.00</td>
+                            </tr>
+                        </table> -->
+
                     </div>
                 </div>
+
                 <div class="placeholder-rectangle">
-                    <div class="rectangle-title">Prediction Plot</div>
+                    <div class="rectangle-title">Loan Approval Prediction</div>
                     <div class="description">
-                        <p>This is where we can add the Prediction Plot and info</p>
+                        <p>Here is your likeliness of getting a loan approval:</p>
+                        <img src="data:image/png;base64,{{ pie_chart_url }}" class="chart-image">
+                        <!-- <svg style="width: 100%; height: 79px;">
+                            <text x="20" y="20">Prediction probabilities</text>
+                            <g>
+                                <rect x="120" y="35" height="17" width="58.704634780068226" style="fill: rgb(31, 119, 180);"></rect>
+                                <rect x="120" y="35" height="17" width="92" fill-opacity="0" stroke="black"></rect>
+                                <text class="prob_text" y="49" fill="black" style="font: 14px tahoma, sans-serif;"></text>
+                                <text x="183.70463478006823" y="49" fill="black" style="font: 14px tahoma, sans-serif;">63%</text>
+                                <text x="110" y="49" fill="black" text-anchor="end" style="font: 14px tahoma, sans-serif;">Not Approved</text>
+                                <rect x="120" y="57" height="17" width="34.295365219931774" style="fill: rgb(255, 127, 14);"></rect>
+                                <rect x="120" y="57" height="17" width="92" fill-opacity="0" stroke="black"></rect>
+                                <text class="prob_text" y="71" fill="black" style="font: 14px tahoma, sans-serif;"></text>
+                                <text x="159.29536521993177" y="71" fill="black" style="font: 14px tahoma, sans-serif;">37%</text>
+                                <text x="110" y="71" fill="black" text-anchor="end" style="font: 14px tahoma, sans-serif;">Approved</text>
+                            </g>
+                        </svg> -->
+                        <p>lorem ipsum dolor sit on deez nutz</p>
                     </div>
                 </div>
             </div>
