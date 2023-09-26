@@ -156,7 +156,7 @@ def plot_to_img(type, explanation):
         return img_b64
     
     else:
-        create_pie_chart()
+        create_pie_chart(explanation)
 
         img = io.BytesIO()
         plt.savefig(img, format='png')
@@ -203,7 +203,6 @@ def plot():
 
     bar_plot_img = plot_to_img('bar', explanation)
     pie_chart_img = plot_to_img('pie', explanation)
-    img_b64 = plot_to_img()
     return render_template('plot.html', bar_plot_url=bar_plot_img, pie_chart_url=pie_chart_img)
 
 
