@@ -93,7 +93,7 @@ def create_bar_plot(lime_output_mapped):
     feature_names, values = zip(*lime_output_mapped)
 
     # Create figure and axis
-    fig, ax = plt.subplots(figsize=(2, 2))
+    fig, ax = plt.subplots(figsize=(7, 6))
 
     # Create horizontal bars for positive and negative values
     ax.barh(feature_names, [max(0, val) for val in values], color='green', label='Positive', alpha=0.7)
@@ -126,7 +126,7 @@ def create_pie_chart(explanation):
     plt.figure(figsize=(2, 2))
 
     # Create a pie chart
-    plt.pie(explanation.predict_proba, labels=labels, colors=colors, explode=explode, autopct='%1.1f%%', textprops={'fontsize': 12}, startangle=140)
+    plt.pie(explanation.predict_proba, labels=labels, colors=colors, explode=explode, autopct='%1.1f%%', textprops={'fontsize': 8}, startangle=140)
 
     # Equal aspect ratio ensures that pie is drawn as a circle
     plt.axis('equal')
@@ -202,8 +202,11 @@ def plot():
     explanation = run_lime(sample, model)
 
     bar_plot_img = plot_to_img('bar', explanation)
-    pie_chart_img = plot_to_img('pie', explanation)
-    return render_template('plot.html', bar_plot_url=bar_plot_img, pie_chart_url=pie_chart_img)
+    # pie_chart_img = plot_to_img('pie', explanation)
+    # return render_template('plot.html', bar_plot_url=bar_plot_img, pie_chart_url=pie_chart_img)
+    return render_template('plot.html', bar_plot_url=bar_plot_img)
+    #return render_template('plot.html', bar_plot_url=pie_chart_img)
+    #return render_template('plot.html')
 
 
 if __name__ == '__main__':
