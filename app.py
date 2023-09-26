@@ -6,6 +6,9 @@ import base64
 import pandas as pd
 import dill
 import re
+import lime
+from lime import lime_text
+from lime.lime_text import LimeTextExplainer
 
 app = Flask(__name__)
 
