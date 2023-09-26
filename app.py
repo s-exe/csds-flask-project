@@ -163,11 +163,36 @@ def plot_to_img(type, explanation):
 
         return img_b64
 
+# Placeholder values for index route
 top_5_features = [1, 2, 3, 4, 5]
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    sample_data = {'ExternalRiskEstimate':87, 
+                   'MSinceOldestTradeOpen':155, 
+                   'MSinceMostRecentTradeOpen':4, 
+                   'AverageMInFile':70, 
+                   'NumSatisfactoryTrades':35, 
+                   'NumTrades60Ever2DerogPubRec':0, 
+                   'NumTrades90Ever2DerogPubRec':0, 
+                   'PercentTradesNeverDelq':100, 
+                   'MSinceMostRecentDelq':-7, 
+                   'MaxDelq2PublicRecLast12M':7, 
+                   'MaxDelqEver':8, 
+                   'NumTotalTrades':36, 
+                   'NumTradesOpeninLast12M':1, 
+                   'PercentInstallTrades':19, 
+                   'MSinceMostRecentInqexcl7days':0, 
+                   'NumInqLast6M':0, 
+                   'NumInqLast6Mexcl7days':0, 
+                   'NetFractionRevolvingBurden':2, 
+                   'NetFractionInstallBurden':-8, 
+                   'NumRevolvingTradesWBalance':2, 
+                   'NumInstallTradesWBalance':1, 
+                   'NumBank2NatlTradesWHighUtilization':0, 
+                   'PercentTradesWBalance':20}
+
     if request.method == 'POST':
         user_input = {}
         for feature in top_5_features:
@@ -176,10 +201,33 @@ def index():
         # Call machine learning model to make predictions
         prediction_result = predict(user_input)
 
-        return render_template('dashboard.html', top_5_features=top_5_features, prediction_result=prediction_result)
+    sample = pd.Series(sample_data)
+    sample_shaped = sample.values.reshape(1,23)
 
-    return render_template('dashboard.html', top_5_features=top_5_features)
+    prediction, model = predict(sample_shaped)
+    explanation = run_lime(sample, model)
 
+    top10 = get_top10(explanation)
+    bar_plot_img = plot_to_img('bar', explanation)
+    pie_chart_img = plot_to_img('pie', explanation)
+
+    return render_template('plot.html', 
+                           feat1=top10[0][0],
+                           feat2=top10[1][0], 
+                           feat3=top10[2][0], 
+                           feat4=top10[3][0], 
+                           feat5=top10[4][0], 
+                           feat6=top10[5][0], 
+                           feat7=top10[6][0], 
+                           feat8=top10[7][0], 
+                           feat9=top10[8][0], 
+                           feat10=top10[9][0], 
+                           bar_plot_url=bar_plot_img, 
+                           pie_chart_url=pie_chart_img
+                           )
+
+
+# Dashboard output route
 @app.route('/plot')
 def plot():
     sample_data = [87, 155, 4, 70, 35, 0, 0, 100, -7, 7, 8, 36, 1, 19, 0, 0, 0, 2, -8, 2, 1, 0, 20]
