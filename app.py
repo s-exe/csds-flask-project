@@ -14,17 +14,23 @@ app = Flask(__name__)
 
 # Load in RandomForestClassification, return sample prediction and model.
 def predict(sample_shaped):
-    model = pickle.load(open('model_v2.pkl', 'rb'))
+    file = open('model_v2.pkl', 'rb')
+    model = pickle.load(file)
+    file.close()
     prediction = model.predict(sample_shaped)
+
     return prediction, model
 
 # Load in LIME model, return explanation of instance object
 def run_lime(sample, model):
     print("INITIATED RUNNING LIME.....")
-    explainer = explainer = dill.load(open('lime_model', 'rb'))
+    file = open('lime_model', 'rb')
+    explainer = dill.load(file)
     print("LIME MODEL LOADED.....")
+    file.close()
     explanation = explainer.explain_instance(sample, model.predict_proba)
     print("EXPLANATION SUCCESSFULLY GENERATED")
+    
     return explanation
 
 
