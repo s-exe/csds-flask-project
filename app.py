@@ -93,7 +93,7 @@ def create_bar_plot(lime_output_mapped):
     feature_names, values = zip(*lime_output_mapped)
 
     # Create figure and axis
-    fig, ax = plt.subplots(figsize=(10, 8))
+    fig, ax = plt.subplots(figsize=(2, 2))
 
     # Create horizontal bars for positive and negative values
     ax.barh(feature_names, [max(0, val) for val in values], color='green', label='Positive', alpha=0.7)
@@ -123,7 +123,7 @@ def create_pie_chart(explanation):
     # Explode a slice to emphasize it
     explode = (0.1, 0)
 
-    plt.figure(figsize=(6, 6))
+    plt.figure(figsize=(2, 2))
 
     # Create a pie chart
     plt.pie(explanation.predict_proba, labels=labels, colors=colors, explode=explode, autopct='%1.1f%%', textprops={'fontsize': 12}, startangle=140)
