@@ -11,7 +11,7 @@ app = Flask(__name__)
 
 # Load in RandomForestClassification, return sample prediction and model.
 def predict(sample_shaped):
-    model = pickle.load(open('model_v1.pkl', 'rb'))
+    model = pickle.load(open('model_v2.pkl', 'rb'))
     prediction = model.predict(sample_shaped)
     return prediction, model
 
