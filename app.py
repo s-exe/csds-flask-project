@@ -138,8 +138,8 @@ def create_bar_plot(lime_output_mapped):
     fig, ax = plt.subplots(figsize=(6.5, 6))
 
     # Create horizontal bars for positive and negative values
-    ax.barh(feature_names, [max(0, val) for val in values], color='green', label='Positive', alpha=0.7)
-    ax.barh(feature_names, [min(0, val) for val in values], color='red', label='Negative', alpha=0.7)
+    ax.barh(feature_names, [max(0, val) for val in values], color='#B3D3E8', label='Positive', alpha=0.7)
+    ax.barh(feature_names, [min(0, val) for val in values], color='#769FCD', label='Negative', alpha=0.7)
 
     # Add labels and legend
     ax.set_xlabel('Feature Contribution')
@@ -169,7 +169,7 @@ def create_pie_chart(explanation):
     labels = ['Rejected (Negative)', 'Approved (Positive)']
 
     # Colors for the pie chart
-    colors = ['red', 'green']
+    colors = ['#769FCD', '#B3D3E8']
 
     # Explode a slice to emphasize it
     explode = (0.1, 0)
