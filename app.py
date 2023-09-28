@@ -7,6 +7,7 @@ import pandas as pd
 import dill
 import re
 import lime
+import random
 from lime import lime_text
 from lime.lime_text import LimeTextExplainer
 
@@ -235,8 +236,17 @@ def plot_to_img(type, explanation):
 '''
                             This is a sample data for initial page loading
 '''
+sampling_data = pd.read_csv('H_test.csv')
+
+# Generate a random index
+random_index = random.randint(0, len(sampling_data) - 1)
+# Select the random test instance from H_val_X
+random_test_instance = sampling_data.iloc[random_index]
+
+sample_data = random_test_instance.to_dict()
+
 # Placeholder values for index route
-sample_data = {'ExternalRiskEstimate':87, 
+'''sample_data = {'ExternalRiskEstimate':87, 
                    'MSinceOldestTradeOpen':155, 
                    'MSinceMostRecentTradeOpen':4, 
                    'AverageMInFile':70, 
@@ -258,7 +268,7 @@ sample_data = {'ExternalRiskEstimate':87,
                    'NumRevolvingTradesWBalance':2, 
                    'NumInstallTradesWBalance':1, 
                    'NumBank2NatlTradesWHighUtilization':0, 
-                   'PercentTradesWBalance':20}
+                   'PercentTradesWBalance':20}'''
 
 '''
                             This is a sample data for initial page loading
