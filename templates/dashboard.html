@@ -157,76 +157,71 @@
             <h4>Top 10 Contributing Features</h4>
             <form method="POST">
                 <!-- feature inputs -->
-                <label for="feature1">{{ feat1 }}</label><br>
-                <input type="number" id="feature1" name="feature1" value='{{ val1 }}' required><br><br>
-                <input type="hidden" id="label1" name="label1" value="{{ feat1 }}">
-
-                <label for="feature2">{{ feat2 }}</label><br>
-                <input type="number" id="feature2" name="feature2" value='{{ val2 }}' required><br><br>
-                <input type="hidden" id="label2" name="label2" value="{{ feat2 }}">
-
-                <label for="feature3">{{ feat3 }}</label><br>
-                <input type="number" id="feature3" name="feature3" value='{{ val3 }}' required><br><br>
-                <input type="hidden" id="label3" name="label3" value="{{ feat3 }}">
-
-                <label for="feature4">{{ feat4 }}</label><br>
-                <input type="number" id="feature4" name="feature4" value='{{ val4 }}' required><br><br>
-                <input type="hidden" id="label4" name="label4" value="{{ feat4 }}">
-
-                <label for="feature5">{{ feat5 }}</label><br>
-                <input type="number" id="feature5" name="feature5" value='{{ val5 }}' required><br><br>
-                <input type="hidden" id="label5" name="label5" value="{{ feat5 }}">
-
-                <label for="feature6">{{ feat6 }}</label><br>
-                <input type="number" id="feature6" name="feature6" value='{{ val6 }}' required><br><br>
-                <input type="hidden" id="label6" name="label6" value="{{ feat6 }}">
-
-                <label for="feature7">{{ feat7 }}</label><br>
-                <input type="number" id="feature7" name="feature7" value='{{ val7 }}' required><br><br>
-                <input type="hidden" id="label7" name="label7" value="{{ feat7 }}">
-
-                <label for="feature8">{{ feat8 }}</label><br>
-                <input type="number" id="feature8" name="feature8" value='{{ val8 }}' required><br><br>
-                <input type="hidden" id="label8" name="label8" value="{{ feat8 }}">
-
-                <label for="feature9">{{ feat9 }}</label><br>
-                <input type="number" id="feature9" name="feature9" value='{{ val9 }}' required><br><br>
-                <input type="hidden" id="label9" name="label9" value="{{ feat9 }}">
-
-                <label for="feature10">{{ feat10 }}</label><br>
-                <input type="number" id="feature10" name="feature10" value='{{ val10 }}' required><br><br>
-                <input type="hidden" id="label10" name="label10" value="{{ feat10 }}">
-
+                <label for="NumTotalTrades">NumTotalTrades:</label><br>
+                <input type="number" step="1" id="NumTotalTrades" name="NumTotalTrades" value="{{ val1 }}" required><br><br>
                 
-                <!-- <h3>Other features</h3>
+                <label for="ExternalRiskEstimate">ExternalRiskEstimate:</label><br>
+                <input type="number" step="0.01" id="ExternalRiskEstimate" name="ExternalRiskEstimate" value="{{ val2 }}" required><br><br>
                 
-                <select id="other-features" name="other-features">
-                    <option value="Feature 6">Feature 6</option>
-                    <option value="Feature 7">Feature 7</option>
-                    <option value="Feature 8">Feature 8</option>
-                    <option value="Feature 9">Feature 9</option>
-                    <option value="Feature 10">Feature 10</option>
-                    <option value="Feature 11">Feature 11</option>
-                    <option value="Feature 12">Feature 12</option>
-                    <option value="Feature 13">Feature 13</option>
-                    <option value="Feature 14">Feature 14</option>
-                    <option value="Feature 15">Feature 15</option>
-                    <option value="Feature 16">Feature 16</option>
-                    <option value="Feature 17">Feature 17</option>
-                    <option value="Feature 18">Feature 18</option>
-                    <option value="Feature 19">Feature 19</option>
-                    <option value="Feature 20">Feature 20</option>
-                    <option value="Feature 21">Feature 21</option>
-                    <option value="Feature 22">Feature 22</option>
-                    <option value="Feature 23">Feature 23</option>
-                </select><br>
+                <label for="MSinceOldestTradeOpen">MSinceOldestTradeOpen:</label><br>
+                <input type="number" step="0.01" id="MSinceOldestTradeOpen" name="MSinceOldestTradeOpen" value="{{ val3 }}" required><br><br>
+                
+                <label for="NumInqLast6M">NumInqLast6M:</label><br>
+                <input type="number" step="0.01" id="NumInqLast6M" name="NumInqLast6M" value="{{ val4 }}" required><br><br>
+                
+                <label for="AverageMInFile">AverageMInFile:</label><br>
+                <input type="number" step="0.01" id="AverageMInFile" name="AverageMInFile" value="{{ val5 }}" required><br><br>
+                
+                <label for="MSinceMostRecentTradeOpen">MSinceMostRecentTradeOpen:</label><br>
+                <input type="number" step="0.01" id="MSinceMostRecentTradeOpen" name="MSinceMostRecentTradeOpen" value="{{ val6 }}" required><br><br>
+                
+                <label for="NumTrades60Ever2DerogPubRec">NumTrades60Ever2DerogPubRec:</label><br>
+                <input type="number" step="0.01" id="NumTrades60Ever2DerogPubRec" name="NumTrades60Ever2DerogPubRec" value="{{ val7 }}" required><br><br>
+                
+                <label for="NumTrades90Ever2DerogPubRec">NumTrades90Ever2DerogPubRec:</label><br>
+                <input type="number" step="0.01" id="NumTrades90Ever2DerogPubRec" name="NumTrades90Ever2DerogPubRec" value="{{ val8 }}" required><br><br>
 
-                
-                <label for="other-features-value">Enter the value for the selected feature:</label>
-                <div class="input-with-button">
-                    <input type="number" id="other-features-value" name="other-features-value" required>
-                    <button type="button" id="save-button">Save</button>
-                </div><br> -->
+                <label for="PercentTradesNeverDelq">PercentTradesNeverDelq:</label><br>
+                <input type="number" step="0.01" id="PercentTradesNeverDelq" name="PercentTradesNeverDelq" value="{{ val9 }}" required><br><br>
+
+                <label for="MSinceMostRecentDelq">MSinceMostRecentDelq:</label><br>
+                <input type="number" step="0.01" id="MSinceMostRecentDelq" name="MSinceMostRecentDelq" value="{{ val10 }}" required><br><br>
+
+                <label for="MaxDelq2PublicRecLast12M">MaxDelq2PublicRecLast12M:</label><br>
+                <input type="number" step="0.01" id="MaxDelq2PublicRecLast12M" name="MaxDelq2PublicRecLast12M" value="{{ val11 }}" required><br><br>
+
+                <label for="MaxDelqEver">MaxDelqEver:</label><br>
+                <input type="number" step="0.01" id="MaxDelqEver" name="MaxDelqEver" value="{{ val12 }}" required><br><br>
+
+                <label for="NumTradesOpeninLast12M">NumTradesOpeninLast12M:</label><br>
+                <input type="number" step="0.01" id="NumTradesOpeninLast12M" name="NumTradesOpeninLast12M" value="{{ val13 }}" required><br><br>
+
+                <label for="PercentInstallTrades">PercentInstallTrades:</label><br>
+                <input type="number" step="0.01" id="PercentInstallTrades" name="PercentInstallTrades" value="{{ val14 }}" required><br><br>
+
+                <label for="MSinceMostRecentInqexcl7days">MSinceMostRecentInqexcl7days:</label><br>
+                <input type="number" step="0.01" id="MSinceMostRecentInqexcl7days" name="MSinceMostRecentInqexcl7days" value="{{ val15 }}" required><br><br>
+
+                <label for="NumInqLast6Mexcl7days">NumInqLast6Mexcl7days:</label><br>
+                <input type="number" step="0.01" id="NumInqLast6Mexcl7days" name="NumInqLast6Mexcl7days" value="{{ val16 }}" required><br><br>
+
+                <label for="NetFractionRevolvingBurden">NetFractionRevolvingBurden:</label><br>
+                <input type="number" step="0.01" id="NetFractionRevolvingBurden" name="NetFractionRevolvingBurden" value="{{ val17 }}" required><br><br>
+
+                <label for="NetFractionInstallBurden">NetFractionInstallBurden:</label><br>
+                <input type="number" step="0.01" id="NetFractionInstallBurden" name="NetFractionInstallBurden" value="{{ val18 }}" required><br><br>
+
+                <label for="NumRevolvingTradesWBalance">NumRevolvingTradesWBalance:</label><br>
+                <input type="number" step="0.01" id="NumRevolvingTradesWBalance" name="NumRevolvingTradesWBalance" value="{{ val19 }}" required><br><br>
+
+                <label for="NumInstallTradesWBalance">NumInstallTradesWBalance:</label><br>
+                <input type="number" step="0.01" id="NumInstallTradesWBalance" name="NumInstallTradesWBalance" value="{{ val20 }}" required><br><br>
+
+                <label for="NumBank2NatlTradesWHighUtilization">NumBank2NatlTradesWHighUtilization:</label><br>
+                <input type="number" step="0.01" id="NumBank2NatlTradesWHighUtilization" name="NumBank2NatlTradesWHighUtilization" value="{{ val21 }}" required><br><br>
+
+                <label for="PercentTradesWBalance">PercentTradesWBalance:</label><br>
+                <input type="number" step="0.01" id="PercentTradesWBalance" name="PercentTradesWBalance" value="{{ val22 }}" required><br><br>
 
                 <button type="submit">Predict</button>
             </form>
