@@ -7,6 +7,7 @@ import pandas as pd
 import dill
 import re
 import lime
+import random
 from lime import lime_text
 from lime.lime_text import LimeTextExplainer
 
@@ -230,13 +231,203 @@ def plot_to_img(type, explanation):
         return img_b64
 
 
+def getDescription(prediction, explanation, test_instance):
+
+    if (prediction[0] >= prediction[1]):
+        verdict = f'negative with a certainty of {str(round(prediction[0] * 100, 2))}%'
+        implication = 'unlikely'
+    elif (prediction[0] < prediction[1]):
+        verdict = f'positive with a certainty of {str(round(prediction[1] * 100, 2))}%'
+        implication = 'likely'
 
 
+    head = f"Based on the provided information, the model's predicted outlook was {verdict}.\
+             This prediction means that it was {implication} that the applicant is able to \
+             complete the loan period without being over 90 days overdue on a repayment.<br>"
+    
+
+    pos = "These are the positively contributing features which were beneficial during\
+           the consideration process:"
+
+    neg = "These were the negatively contributing features which can be improved to potentially\
+           yield a more positive prediction:"
+    
+
+    Fpos = ''
+    Fneg = ''
+    for feature in explanation:
+        if feature[1] > 0:
+            Fpos = Fpos + f'<br>{featureDescription(feature[0], test_instance[feature[0]], 1)}'
+        else:
+            Fneg = Fneg + f'<br>{featureDescription(feature[0], test_instance[feature[0]], 0)}'
+
+    a = f'{head}<br>'
+    b = f'{pos}{Fpos}<br>'
+    c = f'<br>{neg}{Fneg}'
+
+    return a, b, c
+
+
+def featureDescription(feature, value, flag):
+
+    if feature == 'ExternalRiskEstimate':
+        if flag == 1:
+            feature_desc = f'The high value of {feature}: {value}.'
+        else:
+            feature_desc = f'The low value of {feature}: {value}, which would benefit from being greater.'
+    
+    elif feature == 'MSinceOldestTradeOpen':
+        if flag == 1:
+            feature_desc = f'The long history of {feature}: {value}.'
+        else:
+            feature_desc = f'The short history of {feature}: {value}, which being longer would be more preferable.'
+    
+    elif feature == 'MSinceMostRecentTradeOpen':
+        if flag == 1:
+            feature_desc = f'Recent activity in {feature}: {value}.'
+        else:
+            feature_desc = f'Lack of recent activity in {feature}: {value}, where more recent activity is desired.'
+    
+    elif feature == 'AverageMInFile':
+        if flag == 1:
+            feature_desc = f'High average months in {feature}: {value}.'
+        else:
+            feature_desc = f'Low average months in {feature}: {value}, a higher average would provide a more reliable history.'
+    
+    elif feature == 'NumSatisfactoryTrades':
+        if flag == 1:
+            feature_desc = f'Numerous satisfactory trades in {feature}: {value}.'
+        else:
+            feature_desc = f'Few satisfactory trades in {feature}: {value}, which would benefit from more satisfactory trades.'
+    
+    elif feature == 'NumTrades60Ever2DerogPubRec':
+        if flag == 1:
+            feature_desc = f'Few trades with 60+ delinquencies or public records in {feature}: {value}.'
+        else:
+            feature_desc = f'More trades with 60+ delinquencies or public records in {feature}: {value} may indicate credit risk, therefore should be minimised.'
+    
+    elif feature == 'NumTrades90Ever2DerogPubRec':
+        if flag == 1:
+            feature_desc = f'Few trades with 90+ delinquencies or public records in {feature}: {value}.'
+        else:
+            feature_desc = f'More trades with 90+ delinquencies or public records in {feature}: {value} may indicate credit risk, therefore should be minimised.'
+    
+    elif feature == 'PercentTradesNeverDelq':
+        if flag == 1:
+            feature_desc = f'High percentage of trades with no delinquencies in {feature}: {value}.'
+        else:
+            feature_desc = f'Low percentage of trades with no delinquencies in {feature}: {value}, which would benefit from being more consistent.'
+    
+    elif feature == 'MSinceMostRecentDelq':
+        if flag == 1:
+            feature_desc = f'A long period of time since the last deliquency in {feature}: {value}.'
+        else:
+            feature_desc = f'A short period of time since the last deliquency in {feature}: {value}, which should be avoided.'
+    
+    elif feature == 'MaxDelq2PublicRecLast12M':
+        if flag == 1:
+            feature_desc = f'Lowest delinquency level in the last 12 months in {feature}: {value}.'
+        else:
+            feature_desc = f'Higher delinquency level in the last 12 months in {feature}: {value}, would best be avoided to demonstrate lesser risk.'
+    
+    elif feature == 'MaxDelqEver':
+        if flag == 1:
+            feature_desc = f'Lowest delinquency level ever in {feature}: {value}.'
+        else:
+            feature_desc = f'Higher delinquency level ever in {feature}: {value}, would best be avoided to demonstrate lesser risk.'
+    
+    elif feature == 'NumTotalTrades':
+        if flag == 1:
+            feature_desc = f'The total number of trades in {feature}: {value}.'
+        else:
+            feature_desc = f'The total number of trades in {feature}: {value}, where a greater number may show consistency.'
+    
+    elif feature == 'NumTradesOpeninLast12M':
+        if flag == 1:
+            feature_desc = f'Open trades in the last 12 months in {feature}: {value}.'
+        else:
+            feature_desc = f'No open trades in the last 12 months in {feature}: {value}, where a larger number would demonstrate more reliability.'
+    
+    elif feature == 'PercentInstallTrades':
+        if flag == 1:
+            feature_desc = f'The percentage of installment trades in {feature}: {value}.'
+        else:
+            feature_desc = f'The percentage of installment trades in {feature}: {value}, which may benefit from more instances.'
+    
+    elif feature == 'MSinceMostRecentInqexcl7days':
+        if flag == 1:
+            feature_desc = f'No recent inquiries (excluding last 7 days) in {feature}: {value}.'
+        else:
+            feature_desc = f'Recent inquiries (excluding last 7 days) have been performed in {feature}: {value}, which may lead to doubt about the applicant.'
+    
+    elif feature == 'NumInqLast6M':
+        if flag == 1:
+            feature_desc = f'Few inquiries in the last 6 months in {feature}: {value}.'
+        else:
+            feature_desc = f'Too many inquiries in the last 6 months in {feature}: {value}, which may indicate problematic activity.'
+    
+    elif feature == 'NumInqLast6Mexcl7days':
+        if flag == 1:
+            feature_desc = f'Few inquiries in the last 6 months (excluding last 7 days) in {feature}: {value}.'
+        else:
+            feature_desc = f'Numerous inquiries in the last 6 months (excluding last 7 days) in {feature}: {value}, which may indicate problematic activity.'
+    
+    elif feature == 'NetFractionRevolvingBurden':
+        if flag == 1:
+            feature_desc = f'Good ratio of revolving burden in {feature}: {value}'
+        else:
+            feature_desc = f'Poor ratio of revolving burden in {feature}: {value}, which may benefit from being greater.'
+    
+    elif feature == 'NetFractionInstallBurden':
+        if flag == 1:
+            feature_desc = f'Good installment burden ratio in {feature}: {value}'
+        else:
+            feature_desc = f'Poor installment burden ratio in {feature}: {value}, where a more reasonable ratio would be beneficial.'
+    
+    elif feature == 'NumRevolvingTradesWBalance':
+        if flag == 1:
+            feature_desc = f'Number of revolving trades with a balance in {feature}: {value}.'
+        else:
+            feature_desc = f'Number of revolving trades with a balance in {feature}: {value} that may indicate credit risk.'
+    
+    elif feature == 'NumInstallTradesWBalance':
+        if flag == 1:
+            feature_desc = f'Number of installment trades with a balance in {feature}: {value}.'
+        else:
+            feature_desc = f'Number of  installment trades with a balance in {feature}: {value} that may indicate credit risk.'
+    
+    elif feature == 'NumBank2NatlTradesWHighUtilization':
+        if flag == 1:
+            feature_desc = f'Low rate of high utilization of bank/national trades in {feature}: {value}.'
+        else:
+            feature_desc = f'High rate of high utilization of bank/national trades in {feature}: {value}, which should not be too high.'
+    
+    elif feature == 'PercentTradesWBalance':
+        if flag == 1:
+            feature_desc = f'The percentage of trades with a balance in {feature}: {value}.'
+        else:
+            feature_desc = f'The percentage of trades with a balance in {feature}: {value}, which may indicate credit risk.'
+    
+    else:
+        feature_desc = f'No description available for {feature}'
+    
+    return feature_desc
+
+    
 '''
                             This is a sample data for initial page loading
 '''
-# Placeholder values for index route
-sample_data = {'ExternalRiskEstimate':87, 
+sampling_data = pd.read_csv('H_test.csv')
+
+# Generate a random index
+random_index = random.randint(0, len(sampling_data) - 1)
+# Select the random test instance from H_val_X
+random_test_instance = sampling_data.iloc[random_index]
+
+sample_data = random_test_instance.to_dict()
+
+# Placeholder values for index route (not utilised)
+'''sample_data = {'ExternalRiskEstimate':87, 
                    'MSinceOldestTradeOpen':155, 
                    'MSinceMostRecentTradeOpen':4, 
                    'AverageMInFile':70, 
@@ -258,7 +449,7 @@ sample_data = {'ExternalRiskEstimate':87,
                    'NumRevolvingTradesWBalance':2, 
                    'NumInstallTradesWBalance':1, 
                    'NumBank2NatlTradesWHighUtilization':0, 
-                   'PercentTradesWBalance':20}
+                   'PercentTradesWBalance':20}'''
 
 '''
                             This is a sample data for initial page loading
@@ -287,34 +478,37 @@ def index():
     explanation = run_lime(sample, model)
 
     top10 = get_top10(explanation)
+    intro, positives, negatives = getDescription(explanation.predict_proba, top10, sample_data)
     bar_plot_img = plot_to_img('bar', explanation)
     pie_chart_img = plot_to_img('pie', explanation)
 
     return render_template('dashboard.html', 
-                           val1=sample_data["NumTotalTrades"],
-                           val2=sample_data["ExternalRiskEstimate"],
-                           val3=sample_data["MSinceOldestTradeOpen"],
-                           val4=sample_data["NumInqLast6M"],
-                           val5=sample_data["AverageMInFile"],
-                           val6=sample_data["MSinceMostRecentTradeOpen"],
-                           val7=sample_data["NumTrades60Ever2DerogPubRec"],
-                           val8=sample_data["NumTrades90Ever2DerogPubRec"],
-                           val9=sample_data["PercentTradesNeverDelq"],
-                           val10=sample_data["MSinceMostRecentDelq"],
-                           val11=sample_data["MaxDelq2PublicRecLast12M"],
-                           val12=sample_data["MaxDelqEver"],
-                           val13=sample_data["NumTradesOpeninLast12M"],  
-                           val14=sample_data["PercentInstallTrades"],  
-                           val15=sample_data["MSinceMostRecentInqexcl7days"],  
-                           val16=sample_data["NumInqLast6Mexcl7days"],  
-                           val17=sample_data["NetFractionRevolvingBurden"],  
-                           val18=sample_data["NetFractionInstallBurden"],  
-                           val19=sample_data["NumRevolvingTradesWBalance"],  
-                           val20=sample_data["NumInstallTradesWBalance"],
-                           val21=sample_data["NumBank2NatlTradesWHighUtilization"],
-                           val22=sample_data["PercentTradesWBalance"],    
+                           feat1=top10[0][0],
+                           feat2=top10[1][0], 
+                           feat3=top10[2][0], 
+                           feat4=top10[3][0], 
+                           feat5=top10[4][0], 
+                           feat6=top10[5][0], 
+                           feat7=top10[6][0], 
+                           feat8=top10[7][0], 
+                           feat9=top10[8][0], 
+                           feat10=top10[9][0],
+                           val1=sample_data[top10[0][0]],
+                           val2=sample_data[top10[1][0]],
+                           val3=sample_data[top10[2][0]],
+                           val4=sample_data[top10[3][0]],
+                           val5=sample_data[top10[4][0]],
+                           val6=sample_data[top10[5][0]],
+                           val7=sample_data[top10[6][0]],
+                           val8=sample_data[top10[7][0]],
+                           val9=sample_data[top10[8][0]],
+                           val10=sample_data[top10[9][0]], 
                            bar_plot_url=bar_plot_img, 
-                           pie_chart_url=pie_chart_img
+                           pie_chart_url=pie_chart_img,
+                           intro = intro,
+                           positives = positives,
+                           negatives = negatives
+
                            )
 
 if __name__ == '__main__':
