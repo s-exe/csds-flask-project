@@ -160,13 +160,26 @@
         .plot-image, .chart-image {
             width: 90%;
         }
-
         .feature-scroll-container {
-            max-height: 680px;
-            width: fit-content;
-            overflow-y: scroll;
-            margin-bottom: 10px;
+        max-height: 680px;
+        width: fit-content;
+        overflow-y: scroll;
+        margin-bottom: 10px;
         }
+
+        .feature-scroll-container::-webkit-scrollbar {
+            width: 12px; /* Adjust the width as needed */
+        }
+
+        .feature-scroll-container::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.3); /* Adjust the color as needed */
+            border-radius: 6px; /* Adjust the radius as needed */
+        }
+
+        .feature-scroll-container::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(0, 0, 0, 0.5); /* Adjust the hover color as needed */
+        }
+
 
         .feature-scroll-container label {
             display: block;
@@ -214,6 +227,7 @@
                 <h3 style="margin-top: 0px;">Sam Smith's Profile</h3>
             </div>
             <div class="login-container">
+                <!-- this can be added back into the below: style="margin-bottom: 2px;" -->
                 <h4 style="margin-bottom: 2px;">Features List</h4>
                 <form method="POST">
                     <div class="feature-scroll-container">
@@ -399,7 +413,7 @@
                             <text x="110" y="71" fill="black" text-anchor="end" style="font: 14px tahoma, sans-serif;">Approved</text>
                         </g>
                     </svg> -->
-                    <p>lorem ipsum dolor sit on deez nutz</p>
+                    
                     
                 </div>
             </div>
