@@ -222,10 +222,14 @@ def plot_to_img(type, explanation):
         create_pie_chart(explanation)
 
         img = io.BytesIO()
+        # This is for donut
+        # circle = plt.Circle(xy=(0,0), radius=.75, facecolor='white')
+        # plt.gca().add_artist(circle)
+
         plt.savefig(img, format='png')
         plt.close()
         img.seek(0)
-
+        
         img_b64 = base64.b64encode(img.getvalue()).decode('utf8')
 
         return img_b64
