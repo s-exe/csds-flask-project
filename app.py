@@ -466,10 +466,10 @@ explanation for app route below
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        for i in range(1, 11):
-            label = request.form.get("label"+str(i))
-            val = request.form.get("feature"+str(i))
-            sample_data[label] = int(val)
+        for cat in sample_data:
+            print(str(cat))
+            val = request.form.get(str(cat))
+            sample_data[cat] = int(val)
 
     sample = pd.Series(sample_data)
     sample_shaped = sample.values.reshape(1,23)
@@ -483,26 +483,29 @@ def index():
     pie_chart_img = plot_to_img('pie', explanation)
 
     return render_template('dashboard.html', 
-                           feat1=top10[0][0],
-                           feat2=top10[1][0], 
-                           feat3=top10[2][0], 
-                           feat4=top10[3][0], 
-                           feat5=top10[4][0], 
-                           feat6=top10[5][0], 
-                           feat7=top10[6][0], 
-                           feat8=top10[7][0], 
-                           feat9=top10[8][0], 
-                           feat10=top10[9][0],
-                           val1=sample_data[top10[0][0]],
-                           val2=sample_data[top10[1][0]],
-                           val3=sample_data[top10[2][0]],
-                           val4=sample_data[top10[3][0]],
-                           val5=sample_data[top10[4][0]],
-                           val6=sample_data[top10[5][0]],
-                           val7=sample_data[top10[6][0]],
-                           val8=sample_data[top10[7][0]],
-                           val9=sample_data[top10[8][0]],
-                           val10=sample_data[top10[9][0]], 
+                           val1=sample_data['NumTotalTrades'],
+                           val2=sample_data['ExternalRiskEstimate'],
+                           val3=sample_data['MSinceOldestTradeOpen'],
+                           val4=sample_data['NumInqLast6M'],
+                           val5=sample_data['AverageMInFile'],
+                           val6=sample_data['MSinceMostRecentTradeOpen'],
+                           val7=sample_data['NumTrades60Ever2DerogPubRec'],
+                           val8=sample_data['NumTrades90Ever2DerogPubRec'],
+                           val9=sample_data['PercentTradesNeverDelq'],
+                           val10=sample_data['MSinceMostRecentDelq'],
+                           val11=sample_data['MaxDelq2PublicRecLast12M'],
+                           val12=sample_data['MaxDelqEver'],
+                           val13=sample_data['NumTradesOpeninLast12M'],
+                           val14=sample_data['PercentInstallTrades'],
+                           val15=sample_data['MSinceMostRecentInqexcl7days'],
+                           val16=sample_data['NumInqLast6Mexcl7days'],
+                           val17=sample_data['NetFractionRevolvingBurden'],
+                           val18=sample_data['NetFractionInstallBurden'],
+                           val19=sample_data['NumRevolvingTradesWBalance'],
+                           val20=sample_data['NumInstallTradesWBalance'],
+                           val21=sample_data['NumBank2NatlTradesWHighUtilization'], 
+                           val22=sample_data['PercentTradesWBalance'],
+                           val23=sample_data['NumSatisfactoryTrades'],  
                            bar_plot_url=bar_plot_img, 
                            pie_chart_url=pie_chart_img,
                            intro = intro,
