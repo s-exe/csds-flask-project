@@ -275,142 +275,193 @@ def getDescription(prediction, explanation, test_instance):
 def featureDescription(feature, value, flag):
 
     if feature == 'ExternalRiskEstimate':
+        # monotonically decreasing
         if flag == 1:
-            feature_desc = f'The high value of {feature}: {value}.'
+            feature_desc = f'The high value of {feature}: {value} had a positive influence on the risk assessment.'
         else:
-            feature_desc = f'The low value of {feature}: {value}, which would benefit from being greater.'
+            feature_desc = f'The low value of {feature}: {value}, where a greater value would be more beneficial.'
     
     elif feature == 'MSinceOldestTradeOpen':
+        # monotonically decreasing
         if flag == 1:
-            feature_desc = f'The long history of {feature}: {value}.'
+            feature_desc = f'The long history of {feature}: {value} months, demonstrated a reliable history of trading.'
         else:
-            feature_desc = f'The short history of {feature}: {value}, which being longer would be more preferable.'
+            feature_desc = f'The short history of {feature}: {value} months, which being longer would demonstrate more reliability.'
     
     elif feature == 'MSinceMostRecentTradeOpen':
+        # monotonically decreasing
         if flag == 1:
-            feature_desc = f'Recent activity in {feature}: {value}.'
+            feature_desc = f"Recent activity in {feature}: {value} months ago, displaying assurance about the applicant."
         else:
-            feature_desc = f'Lack of recent activity in {feature}: {value}, where more recent activity is desired.'
+            feature_desc = f'Lack of recent trades in {feature}: {value} months ago, where more activity is desired.'
     
     elif feature == 'AverageMInFile':
+        # monotonically decreasing
         if flag == 1:
-            feature_desc = f'High average months in {feature}: {value}.'
+            feature_desc = f'The applicant has a high average of {value} months for {feature}.'
         else:
-            feature_desc = f'Low average months in {feature}: {value}, a higher average would provide a more reliable history.'
+            feature_desc = f'The applicant has a low average of {value} months for {feature}, if higher it would provide a more reliable history.'
     
     elif feature == 'NumSatisfactoryTrades':
+        # monotonically decreasing
         if flag == 1:
             feature_desc = f'Numerous satisfactory trades in {feature}: {value}.'
         else:
-            feature_desc = f'Few satisfactory trades in {feature}: {value}, which would benefit from more satisfactory trades.'
+            feature_desc = f'Insufficient satisfactory trades in {feature}: {value}, which would benefit from more instances on record.'
     
     elif feature == 'NumTrades60Ever2DerogPubRec':
+        # monotonically increasing
         if flag == 1:
-            feature_desc = f'Few trades with 60+ delinquencies or public records in {feature}: {value}.'
+            feature_desc = f'Few instances of trades with 60+ delinquencies or public records in {feature}: {value}.'
         else:
             feature_desc = f'More trades with 60+ delinquencies or public records in {feature}: {value} may indicate credit risk, therefore should be minimised.'
     
     elif feature == 'NumTrades90Ever2DerogPubRec':
+        # monotonically increasing
         if flag == 1:
-            feature_desc = f'Few trades with 90+ delinquencies or public records in {feature}: {value}.'
+            feature_desc = f'Few instances of trades with 90+ delinquencies or public records in {feature}: {value}.'
         else:
             feature_desc = f'More trades with 90+ delinquencies or public records in {feature}: {value} may indicate credit risk, therefore should be minimised.'
     
     elif feature == 'PercentTradesNeverDelq':
+        # monotonically decreasing
         if flag == 1:
-            feature_desc = f'High percentage of trades with no delinquencies in {feature}: {value}.'
+            feature_desc = f"High percentage of trades with no delinquencies in {feature}: {value}%, displays the applicant's capability to avoid delinquency."
         else:
-            feature_desc = f'Low percentage of trades with no delinquencies in {feature}: {value}, which would benefit from being more consistent.'
+            feature_desc = f'Low percentage of trades with no delinquencies in {feature}: {value}%, which would benefit from having more trades that avoid complications.'
     
     elif feature == 'MSinceMostRecentDelq':
+        # monotonically decreasing
         if flag == 1:
-            feature_desc = f'A long period of time since the last deliquency in {feature}: {value}.'
+            feature_desc = f'A long period of time since the last deliquency of {value} months in {feature}, demonstrating reliability to make repayments without issue.'
         else:
-            feature_desc = f'A short period of time since the last deliquency in {feature}: {value}, which should be avoided.'
+            feature_desc = f'A short period of time since the last deliquency of {value} months in {feature}, which ideally would be avoided and aimed to be increased.'
     
     elif feature == 'MaxDelq2PublicRecLast12M':
-        if flag == 1:
-            feature_desc = f'Lowest delinquency level in the last 12 months in {feature}: {value}.'
+        # monotonically decreasing for 0-7
+        # complete
+        if value == 0:
+            feature_desc = f'The delinquency level in the last 12 months for {feature} indicates a serious issue with the applicant.'
+        elif value == 1:
+            feature_desc = f'The deliquency level in the last 12 months {feature} was 120+ days on their repayments, indicating significant financial distress.'
+        elif value == 2:
+            feature_desc = f'The deliquency level in the last 12 months {feature} was 90 days delinquent on their repayments, failing the same risk criteria for this loan.'
+        elif value == 3:
+            feature_desc = f'The deliquency level in the last 12 months {feature} was 60 days delinquent on their repayments, a concerning sign but not as severe.'
+        elif value == 4:
+            feature_desc = f'The deliquency level in the last 12 months {feature} was 30 days delinquent on their repayments, a small indicator of potential risk but still reasonable.'
+        elif value == 5 or {value} == 6: 
+            feature_desc = f'The deliquency level in the last 12 months {feature} was unknown.'
+        elif value == 7:
+            feature_desc = f'The deliquency level in the last 12 months {feature} does not exist for the applicant.'
         else:
-            feature_desc = f'Higher delinquency level in the last 12 months in {feature}: {value}, would best be avoided to demonstrate lesser risk.'
-    
+            # catch all for 8, 9 if they somehow exist despite being removed from the test set
+            feature_desc = f'The delinquency level in the last 12 months for {feature} cannot be identified.'
+
     elif feature == 'MaxDelqEver':
-        if flag == 1:
-            feature_desc = f'Lowest delinquency level ever in {feature}: {value}.'
+    # Monotonically decreasing for 2-8
+        if value == 2:
+            feature_desc = f'The maximum delinquency ever for {feature} indicates a derogatory comment, suggesting a very severe level of delinquency.'
+        elif value == 3:
+            feature_desc = f'The maximum delinquency ever for {feature} was 120+ days delinquent at some point, indicating significant financial distress.'
+        elif value == 4:
+            feature_desc = f'The maximum delinquency ever for {feature} was 90 days delinquent at some point, failing the same risk criteria for this loan.'
+        elif value == 5:
+            feature_desc = f'The maximum delinquency ever for {feature} was 60 days delinquent at some point, a concerning sign but not as severe.'
+        elif value == 6:
+            feature_desc = f'The maximum delinquency ever for {feature} was 30 days delinquent at some point, a small indicator of potential risk but still reasonable.'
+        elif value == 7:
+            feature_desc = f'The maximum delinquency ever for {feature} has an unknown delinquency history.'
+        elif value == 8:
+            feature_desc = f'The maximum delinquency ever for {feature} indicates the applicant is currently not delinquent and has never been delinquent in the past.'
         else:
-            feature_desc = f'Higher delinquency level ever in {feature}: {value}, would best be avoided to demonstrate lesser risk.'
-    
+            # Catch all for values other than 2-8
+            feature_desc = f'The maximum delinquency ever for {feature} cannot be identified.'
+
+
     elif feature == 'NumTotalTrades':
+        # no constraint
         if flag == 1:
-            feature_desc = f'The total number of trades in {feature}: {value}.'
+            feature_desc = f'The total number of trades made by the applicant of {value} in {feature}, having a positive influence.'
         else:
-            feature_desc = f'The total number of trades in {feature}: {value}, where a greater number may show consistency.'
-    
+            feature_desc = f'The total number of trades made by the applicant of {value} in {feature}, having a negative influence.'
+
     elif feature == 'NumTradesOpeninLast12M':
+        # monotonically increasing
         if flag == 1:
-            feature_desc = f'Open trades in the last 12 months in {feature}: {value}.'
+            feature_desc = f'The applicant opened many trades in the last 12 months in {feature}: {value}, where recent activity had a positive effect on the prediction.'
         else:
-            feature_desc = f'No open trades in the last 12 months in {feature}: {value}, where a larger number would demonstrate more reliability.'
+            feature_desc = f'The applicant opened few trades in the last 12 months in {feature}: {value}, where more recent activity would improve the prediction.'
     
     elif feature == 'PercentInstallTrades':
+        # no constaint
         if flag == 1:
-            feature_desc = f'The percentage of installment trades in {feature}: {value}.'
+            feature_desc = f'The percentage of installment trades in {feature}: {value}, having a positive influence on the predicted class.'
         else:
-            feature_desc = f'The percentage of installment trades in {feature}: {value}, which may benefit from more instances.'
+            feature_desc = f'The percentage of installment trades in {feature}: {value}, which was negatively influcencing the predicted class.'
     
     elif feature == 'MSinceMostRecentInqexcl7days':
+        # monotonically decreasing
         if flag == 1:
-            feature_desc = f'No recent inquiries (excluding last 7 days) in {feature}: {value}.'
+            feature_desc = f'No recent inquiries (excluding last 7 days) in {feature}: {value} months ago, a good indicator that the applicant has not caused concern in recent months.'
         else:
-            feature_desc = f'Recent inquiries (excluding last 7 days) have been performed in {feature}: {value}, which may lead to doubt about the applicant.'
+            feature_desc = f'Recent inquiries (excluding last 7 days) have been performed in {feature}: {value} month ago, which may lead to doubt about the applicant.'
     
     elif feature == 'NumInqLast6M':
+        # monotonically increasing
         if flag == 1:
-            feature_desc = f'Few inquiries in the last 6 months in {feature}: {value}.'
+            feature_desc = f'Few inquiries in the last 6 months in {feature}: {value}, a positive indicator for the risk assessment.'
         else:
-            feature_desc = f'Too many inquiries in the last 6 months in {feature}: {value}, which may indicate problematic activity.'
+            feature_desc = f'Too many inquiries in the last 6 months in {feature}: {value}, which may indicate problematic activity and negatively impact the risk assessment.'
     
     elif feature == 'NumInqLast6Mexcl7days':
+        # monotonically increasing
         if flag == 1:
-            feature_desc = f'Few inquiries in the last 6 months (excluding last 7 days) in {feature}: {value}.'
+            feature_desc = f'Few inquiries in the last 6 months (excluding last 7 days) in {feature}: {value}, a positive indicator for the risk assessment.'
         else:
-            feature_desc = f'Numerous inquiries in the last 6 months (excluding last 7 days) in {feature}: {value}, which may indicate problematic activity.'
+            feature_desc = f'Numerous inquiries in the last 6 months (excluding last 7 days) in {feature}: {value}, which may indicate problematic activity and negatively impact the risk assessment.'
     
     elif feature == 'NetFractionRevolvingBurden':
+        # monotonically increasing 
         if flag == 1:
-            feature_desc = f'Good ratio of revolving burden in {feature}: {value}'
+            feature_desc = f'Good ratio of revolving burden in {feature}: {value}, a positive influence on the prediction.'
         else:
-            feature_desc = f'Poor ratio of revolving burden in {feature}: {value}, which may benefit from being greater.'
+            feature_desc = f'Poor ratio of revolving burden in {feature}: {value}, which may benefit from being greater in order to have a more positive outcome.'
     
     elif feature == 'NetFractionInstallBurden':
+        # monotonically increasing
         if flag == 1:
-            feature_desc = f'Good installment burden ratio in {feature}: {value}'
+            feature_desc = f'Good installment burden ratio in {feature}: {value}, an indicator that the applicant can maintain a fair ratio of installment balances.'
         else:
-            feature_desc = f'Poor installment burden ratio in {feature}: {value}, where a more reasonable ratio would be beneficial.'
+            feature_desc = f'Poor installment burden ratio in {feature}: {value}, where a more reasonable ratio would be beneficial to demonstrate the ability to maintain good installment balances.'
     
     elif feature == 'NumRevolvingTradesWBalance':
+        # no constraint
         if flag == 1:
-            feature_desc = f'Number of revolving trades with a balance in {feature}: {value}.'
+            feature_desc = f'Number of revolving trades with a balance in {feature}: {value}, positively impacting the predicted risk assessment.'
         else:
-            feature_desc = f'Number of revolving trades with a balance in {feature}: {value} that may indicate credit risk.'
+            feature_desc = f'Number of revolving trades with a balance in {feature}: {value}, negatively impacting the predicted risk assessment as it may indicate poor trustworthiness.'
     
     elif feature == 'NumInstallTradesWBalance':
+        # no constraint
         if flag == 1:
-            feature_desc = f'Number of installment trades with a balance in {feature}: {value}.'
+            feature_desc = f'Number of installment trades with a balance in {feature}: {value}, a good sign of trustworthiness in the applicant.'
         else:
-            feature_desc = f'Number of  installment trades with a balance in {feature}: {value} that may indicate credit risk.'
+            feature_desc = f'Number of installment trades with a balance in {feature}: {value}, a poor sign of reliability that may reduce trust in the applicant.'
     
     elif feature == 'NumBank2NatlTradesWHighUtilization':
+        # monotonically increasing
         if flag == 1:
-            feature_desc = f'Low rate of high utilization of bank/national trades in {feature}: {value}.'
+            feature_desc = f'Low rate of high utilization of bank/national trades in {feature}: {value}, which is beneficial towards a positive predicted class.'
         else:
-            feature_desc = f'High rate of high utilization of bank/national trades in {feature}: {value}, which should not be too high.'
+            feature_desc = f'High rate of high utilization of bank/national trades in {feature}: {value}, which is detrimental towards a positive predicted class and should not be too high.'
     
     elif feature == 'PercentTradesWBalance':
+        # no constraint
         if flag == 1:
-            feature_desc = f'The percentage of trades with a balance in {feature}: {value}.'
+            feature_desc = f'The percentage of trades with a balance in {feature}: {value}, which contributed towards a positive risk assessment.'
         else:
-            feature_desc = f'The percentage of trades with a balance in {feature}: {value}, which may indicate credit risk.'
+            feature_desc = f'The percentage of trades with a balance in {feature}: {value}, which contributed towards a negative risk assessment.'
     
     else:
         feature_desc = f'No description available for {feature}'
