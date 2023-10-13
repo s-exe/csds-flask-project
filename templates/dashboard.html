@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FICO Explainable Models</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800;900&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
         
@@ -343,53 +344,33 @@
                     <div class="description">
                         <p>These are the factors that contributed to your loan approval prediction</p>
                     </div>
-                    <img src="data:image/png;base64,{{ bar_plot_url }}" class="plot-image">
-                    <!-- <table>
-                        <tr style="color: black; font-size: 10px;">
-                            <td>Feature</td>
-                            <td>Value</td>
-                        </tr>
-                        <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
-                            <td>0</td>
-                            <td>52.00</td>
-                        </tr>
-                        <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
-                            <td>17</td>
-                            <td>35.00</td>
-                        </tr>
-                        <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
-                            <td>3</td>
-                            <td>16.00</td>
-                        </tr>
-                        <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
-                            <td>7</td>
-                            <td>96.00</td>
-                        </tr>
-                        <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
-                            <td>22</td>
-                            <td>78.00</td>
-                        </tr>
-                        <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
-                            <td>10</td>
-                            <td>5.00</td>
-                        </tr>
-                        <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
-                            <td>1</td>
-                            <td>30.00</td>
-                        </tr>
-                        <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
-                            <td>21</td>
-                            <td>1.00</td>
-                        </tr>
-                        <tr style="border-style: hidden; background-color: rgb(31, 119, 180);">
-                            <td>9</td>
-                            <td>3.00</td>
-                        </tr>
-                        <tr style="border-style: hidden; background-color: rgb(255, 127, 14);">
-                            <td>14</td>
-                            <td>1.00</td>
-                        </tr>
-                    </table> -->
+                    <canvas id="barChart" width="600" height="600"></canvas>
+                    <script>
+                        var ctx = document.getElementById('barChart').getContext('2d');
+                        var barChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: {{ bar_names | safe }},
+                                datasets: [
+                                    {
+                                        label: "Positive Contributing",
+                                        data: {{ pos_bar_values | safe }},
+                                        backgroundColor: '#B3D3E8'
+                                    },
+                                    {
+                                        label: "Negative Contributing",
+                                        data: {{ neg_bar_values | safe }},
+                                        backgroundColor: '#769FCD'
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: false,
+                                indexAxis: 'x'
+                            }
+                        });
+                    </script>
+                    <!-- <img src="data:image/png;base64,{{ bar_plot_url }}" class="plot-image"> -->
                 </div>
 
                 <div class="placeholder-rectangle">
@@ -397,22 +378,26 @@
                     <div class="description">
                         <p>Here is your likeliness of getting a loan approval:</p>
                     </div>
-                    <img src="data:image/png;base64,{{ pie_chart_url }}" class="chart-image">
-                    <!-- <svg style="width: 100%; height: 79px;">
-                        <text x="20" y="20">Prediction probabilities</text>
-                        <g>
-                            <rect x="120" y="35" height="17" width="58.704634780068226" style="fill: rgb(31, 119, 180);"></rect>
-                            <rect x="120" y="35" height="17" width="92" fill-opacity="0" stroke="black"></rect>
-                            <text class="prob_text" y="49" fill="black" style="font: 14px tahoma, sans-serif;"></text>
-                            <text x="183.70463478006823" y="49" fill="black" style="font: 14px tahoma, sans-serif;">63%</text>
-                            <text x="110" y="49" fill="black" text-anchor="end" style="font: 14px tahoma, sans-serif;">Not Approved</text>
-                            <rect x="120" y="57" height="17" width="34.295365219931774" style="fill: rgb(255, 127, 14);"></rect>
-                            <rect x="120" y="57" height="17" width="92" fill-opacity="0" stroke="black"></rect>
-                            <text class="prob_text" y="71" fill="black" style="font: 14px tahoma, sans-serif;"></text>
-                            <text x="159.29536521993177" y="71" fill="black" style="font: 14px tahoma, sans-serif;">37%</text>
-                            <text x="110" y="71" fill="black" text-anchor="end" style="font: 14px tahoma, sans-serif;">Approved</text>
-                        </g>
-                    </svg> -->
+                    <canvas id="doughnutChart" width="600" height="600"></canvas>
+                    <script>
+                        var ctx = document.getElementById('doughnutChart').getContext('2d');
+                        var donutChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['Rejected (Negative)', 'Approved (Positive)'],
+                                datasets: [
+                                    {
+                                        label: "Data points",
+                                        data: {{ doughnut_values | safe }},
+                                        backgroundColor: ['#769FCD', '#B3D3E8']
+                                    }
+                                ]
+                            },
+                            options: {
+                                responsive: false
+                            }
+                        });
+                    </script>
                     
                     
                 </div>

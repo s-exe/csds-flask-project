@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, render_template_string
+from flask import Flask, render_template, request
 import pickle
 import matplotlib.pyplot as plt
 import io
@@ -483,8 +483,25 @@ def index():
 
     top10 = get_top10(explanation)
     intro, positives, negatives = getDescription(explanation.predict_proba, top10, sample_data)
-    bar_plot_img = plot_to_img('bar', explanation)
-    pie_chart_img = plot_to_img('pie', explanation)
+    # bar_plot_img = plot_to_img('bar', explanation)
+    # pie_chart_img = plot_to_img('pie', explanation)
+    doughnut_values = list(explanation.predict_proba)
+    # bar_names, bar_values = zip(*top10)
+    bar_names = []
+    pos_bar_values = []
+    neg_bar_values = []
+
+    for pair in top10:
+        bar_names.append(pair[0])
+
+        if pair[1] > 0:
+            # pos_bar_names.append(pair[0])
+            pos_bar_values.append(pair[1])
+            neg_bar_values.append(0)
+        
+        else:
+            pos_bar_values.append(0)
+            neg_bar_values.append(pair[1])
 
     return render_template('dashboard.html', 
                            val1=sample_data['NumTotalTrades'],
@@ -510,8 +527,12 @@ def index():
                            val21=sample_data['NumBank2NatlTradesWHighUtilization'], 
                            val22=sample_data['PercentTradesWBalance'],
                            val23=sample_data['NumSatisfactoryTrades'],  
-                           bar_plot_url=bar_plot_img, 
-                           pie_chart_url=pie_chart_img,
+                           # bar_plot_url=bar_plot_img, 
+                           # pie_chart_url=pie_chart_img,
+                           doughnut_values = doughnut_values,
+                           bar_names = bar_names,
+                           pos_bar_values = pos_bar_values,
+                           neg_bar_values = neg_bar_values,
                            intro = intro,
                            positives = positives,
                            negatives = negatives
