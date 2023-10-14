@@ -4,3 +4,4 @@ pandas==1.5.3
 dill==0.3.6
 lime
 gunicorn
+Werkzeug==2.2.2
