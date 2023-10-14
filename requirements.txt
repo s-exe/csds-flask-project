@@ -1,6 +1,5 @@
 Flask==2.2.2
 scikit-learn==1.2.2
-matplotlib==3.7.1
 pandas==1.5.3
 dill==0.3.6
 lime
