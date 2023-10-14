@@ -10,6 +10,8 @@ import lime
 import random
 from lime import lime_text
 from lime.lime_text import LimeTextExplainer
+import warnings
+warnings.filterwarnings("ignore")
 
 app = Flask(__name__)
 
