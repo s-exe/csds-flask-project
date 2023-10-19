@@ -247,30 +247,32 @@ def getDescription(prediction, explanation, test_instance):
         implication = 'likely'
 
 
-    head = f"Based on the provided information, the model's predicted outlook was {verdict}.\
-             This prediction means that it was {implication} that the applicant is able to \
+    head = f"Based on the provided information, the model's predicted outlook was <b>{verdict}</b>.\
+             This prediction means that it was <b>{implication}</b> that the applicant is able to \
              complete the loan period without being over 90 days overdue on a repayment.<br>"
     
 
-    pos = "These are the positively contributing features which were beneficial during\
-           the consideration process:"
+    pos = "These were the <b>positively</b> contributing features which were beneficial during\
+           the consideration process:<br>"
 
-    neg = "These were the negatively contributing features which can be improved to potentially\
-           yield a more positive prediction:"
+    neg = "These were the <b>negatively</b> contributing features which can be improved to potentially\
+           yield a more positive prediction:<br>"
     
 
-    Fpos = ''
-    Fneg = ''
+    Fpos = '<ul style="font-size: 12px; text-align: left;">'
+    Fneg = '<ul style="font-size: 12px; text-align: left;">'
     for feature in explanation:
         if feature[1] > 0:
-            Fpos = Fpos + f'<br>{featureDescription(feature[0], test_instance[feature[0]], 1)}'
+            Fpos = Fpos + f'<li>{featureDescription(feature[0], test_instance[feature[0]], 1)}</li>'
         else:
-            Fneg = Fneg + f'<br>{featureDescription(feature[0], test_instance[feature[0]], 0)}'
+            Fneg = Fneg + f'<li>{featureDescription(feature[0], test_instance[feature[0]], 0)}</li>'
 
-    a = f'{head}<br>'
-    b = f'{pos}{Fpos}<br>'
-    c = f'<br>{neg}{Fneg}'
+    a = f'{head}'
+    b = f'{pos}{Fpos}'
+    c = f'{neg}{Fneg}'
 
+    b = b + "</ul>"
+    c = c + "</ul>"
     return a, b, c
 
 
